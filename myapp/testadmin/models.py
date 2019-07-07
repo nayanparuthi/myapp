@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
+        # I think **extra_field should also an arguement it holds staff, admin, active fields>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         """
         Creates and saves a User with the given email and password.
         """
@@ -21,7 +22,8 @@ class UserManager(BaseUserManager):
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_staffuser(self, email, password):
+    def create_staffuser(self, email, password):            
+        # I think **extra_field should also an arguement it holds staff, admin, active fields>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         """
         Creates and saves a staff user with the given email and password.
         """
@@ -34,6 +36,7 @@ class UserManager(BaseUserManager):
         return user_obj
 
     def create_superuser(self, email, password):
+        # I think **extra_field should also an arguement it holds staff, admin, active fields>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         """
         Creates and saves a superuser with the given email and password.
         """
@@ -77,33 +80,34 @@ class User(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
+        # "Does the user have a specific permission?" This is a comment
         # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
+        # "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
 
     @property
     def is_staff(self):
-        "Is the user a member of staff?"
+        # "Is the user a member of staff?"
         return self.staff
 
     @property
     def is_admin(self):
-        "Is the user a admin member?"
+        # "Is the user a admin member?"
         return self.admin
 
     @property
     def is_active(self):
-        "Is the user active?"
+        # "Is the user active?"
         return self.active
 
-class Profile(models.Model):
-    user_obj=models.OneToOneField(get_user_model())
-	
+# class Profile(models.Model):
+#     user_obj=models.OneToOneField(get_user_model())
+    def __str__(self):
+        return self.email
 		
 
 class GuestEmail(models.Model):
